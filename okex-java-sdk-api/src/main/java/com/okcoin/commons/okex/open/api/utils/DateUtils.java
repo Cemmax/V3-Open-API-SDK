@@ -5,7 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -114,10 +117,10 @@ public class DateUtils {
      * UNIX timestamp ISO 8601 rule eg: 2018-02-03T05:34:14.110Z
      */
     public static String getUnixTime() {
-        StringBuilder nowStr = new StringBuilder(Instant.now().toString());
-        //可以有效解决字符串下标越界的问题
-        return new StringBuilder().append(nowStr.toString()).toString();
-        //return new StringBuilder().append(nowStr.substring(0,nowStr.lastIndexOf("."))).append(nowStr.substring(nowStr.lastIndexOf(".")).substring(0,4)).append(nowStr.substring(nowStr.length()-1)).toString();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String timeStamp = format.format(LocalDateTime.now(Clock.systemUTC()));
+//        System.out.println(timeStamp);
+        return timeStamp;
     }
 
     /**Date
